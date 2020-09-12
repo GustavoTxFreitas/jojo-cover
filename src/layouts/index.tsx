@@ -2,16 +2,12 @@ import React from "react"
 import { Link } from "gatsby"
 
 interface Props {
-  location: Location
   title: string
   children?: any
 }
 
-const Layout = ({ location, title, children }: Props) => {
-  let header
-
-
-    header = (
+const Layout = ({ title, children }: Props) => {
+  let header = (
       <h3
         style={{
           fontFamily: `Montserrat, sans-serif`,
