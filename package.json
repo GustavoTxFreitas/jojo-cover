@@ -1,0 +1,34 @@
+{
+  "name": "gatsby-starter-typescript",
+  "description": "Gatsby TypeScript starter",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "@types/node": "^14.10.1",
+    "@types/react": "16.9.49",
+    "@types/react-dom": "16.9.8",
+    "gatsby": "^2.24.57",
+    "gatsby-link": "^2.4.13",
+    "gatsby-plugin-react-helmet": "^3.3.10",
+    "gatsby-plugin-typescript": "^2.4.19"
+  },
+  "keywords": [
+    "gatsby, typescript"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --parser typescript --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.ts*\"",
+    "update:packages": "npm audit fix -f && npm-check-updates -u && npm update && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "prettier": "^2.1.1"
+  },
+  "contributors": [
+    "fabien0102 <fabien0102@gmail.com>",
+    "Hays Clark <hays.clark@gmail.com>"
+  ]
+}
