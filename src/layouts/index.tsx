@@ -1,70 +1,53 @@
-import * as React from 'react'
-import Link from 'gatsby-link'
-import Helmet from 'react-helmet'
+import React from "react"
+import { Link } from "gatsby"
 
-import './index.css'
+interface Props {
+  location: Location
+  title: string
+  children?: any
+}
 
-const Header = () => (
-  <div
-    style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
-    }}
-  >
+const Layout = ({ location, title, children }: Props) => {
+  let header
+
+
+    header = (
+      <h3
+        style={{
+          fontFamily: `Montserrat, sans-serif`,
+          marginTop: 0,
+        }}
+      >
+        <Link
+          style={{
+            boxShadow: `none`,
+            textDecoration: `none`,
+            color: `inherit`,
+          }}
+          to={`/`}
+        >
+          {title}
+        </Link>
+      </h3>
+    )
+
+
+  return (
     <div
       style={{
-        margin: '0 auto',
-        maxWidth: 960,
-        padding: '1.45rem 1.0875rem',
+        marginLeft: `auto`,
+        marginRight: `auto`,
       }}
     >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-          }}
-        >
-          Gatsby
-        </Link>
-      </h1>
+      <header>{header}</header>
+      <main>{children}</main>
+      <footer>
+        © {new Date().getFullYear()}, Built with
+        {` `}
+        <a href="https://www.gatsbyjs.org">Gatsby</a>
+      </footer>
     </div>
-  </div>
-)
-
-interface DefaultLayoutProps extends React.HTMLProps<HTMLDivElement> {
-  location: {
-    pathname: string
-  }
-  children: any
+  )
 }
 
-class DefaultLayout extends React.PureComponent<DefaultLayoutProps, void> {
-  public render() {
-    return (
-      <div>
-        <Helmet
-          title="Gatsby Default Starter"
-          meta={[
-            { name: 'description', content: 'Sample' },
-            { name: 'keywords', content: 'sample, something' },
-          ]}
-        />
-        <Header />
-        <div
-          style={{
-            margin: '0 auto',
-            maxWidth: 960,
-            padding: '0px 1.0875rem 1.45rem',
-            paddingTop: 0,
-          }}
-        >
-          {this.props.children()}
-        </div>
-      </div>
-    )
-  }
-}
-
-export default DefaultLayout
+export default Layout
