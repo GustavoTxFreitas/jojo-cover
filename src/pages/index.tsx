@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import DatePicker from "react-datepicker";
+import { Carousel } from 'react-responsive-carousel';
 import Layout from "../layouts";
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
@@ -30,22 +31,6 @@ export default function Index(props: IndexPageProps) {
   const jojos = allJojoVolume.nodes;
   const [birthday, setBirthday] = useState(new Date());
   const [closestIndex, setClosestIndex] = useState(0);
-
-  const years = Array.from({length: 1901}, (x, i) => i);
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
 
   useEffect(() => {
     let closestDay = Number.MAX_SAFE_INTEGER
@@ -79,6 +64,14 @@ export default function Index(props: IndexPageProps) {
       <p>
         Welcome to your new <strong>{site.siteMetadata.title}</strong> site.
       </p>
+      <Carousel showThumbs={false} showIndicators={false} selectedItem={closestIndex} centerMode centerSlidePercentage={80}>
+        {jojos.map((elem) => (
+          <div key={elem.id}>
+            <img src={elem.cover} />
+            <p className="legend">{elem.volume} - {elem.english_title}</p>
+          </div>
+        ))}
+      </Carousel>
       <p>{closestIndex}</p>
     </Layout>
   );
