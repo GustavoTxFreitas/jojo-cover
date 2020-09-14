@@ -1,12 +1,8 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
-import DatePicker, {registerLocale } from "react-datepicker"
+import DatePicker from "react-datepicker";
 import { Carousel } from "react-responsive-carousel";
 import Layout from "../layouts";
-import i18n from "../components/i18next";
-import { useTranslation } from "react-i18next";
-import { ptBR, ja, enUS } from 'date-fns/esm/locale'
-import i18next from "i18next";
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -35,11 +31,12 @@ export default function Index(props: IndexPageProps) {
   const jojos = allJojoVolume.nodes;
   const [birthday, setBirthday] = useState(new Date());
   const [closestIndex, setClosestIndex] = useState(0);
-  const { t } = useTranslation("translation", { i18n });
 
-  registerLocale('pt-BR', ptBR)
-  registerLocale('en-US', enUS)
-  registerLocale('ja', ja)
+  const [siteName, setSiteName] = useState("");
+  const [datePlaceholder, setDatePlaceholder] = useState("");
+  const [loading, setLoading] = useState("");
+  const [locale, setLocale] = useState("en-US");
+  const [helpme, setHelpme] = useState("");
 
   useEffect(() => {
     let closestDay = Number.MAX_SAFE_INTEGER;
@@ -57,21 +54,19 @@ export default function Index(props: IndexPageProps) {
     }
   }, [birthday]);
 
-  function handleChangeLanguage(e: ChangeEvent<HTMLSelectElement>)
-  {
-    i18next.changeLanguage(e.target.value);
-  }
-
   return (
-    <Layout title={t("siteName")} footerMessage={t("helpme")}>
-      <select onChange={handleChangeLanguage}>
-        <option value="en-US">en-US</option>
-        <option value="pt-BR">pt-BR</option>
-        <option value="ja">ja</option>
-      </select>
+    <Layout
+      siteName={siteName}
+      helpme={helpme}
+      setSiteName={setSiteName}
+      setLoading={setLoading}
+      setHelpme={setHelpme}
+      setDatePlaceholder={setDatePlaceholder}
+      setLocale={setLocale}
+    >
       <DatePicker
-        locale={t("locale")}
-        placeholderText={t("datePlaceholder")}
+        locale={locale}
+        placeholderText={datePlaceholder}
         selected={birthday}
         dropdownMode="select"
         dateFormat="P"
@@ -96,7 +91,6 @@ export default function Index(props: IndexPageProps) {
           </div>
         ))}
       </Carousel>
-      <p>{closestIndex}</p>
     </Layout>
   );
 }

@@ -1,49 +1,26 @@
 import React from "react"
-import { Link } from "gatsby"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
 
 interface Props {
-  title: string
-  footerMessage: string,
+  siteName: string;
+  helpme: string;
   children?: any
+  setSiteName: (arg0: string) => void;
+  setLocale: (arg0: string) => void;
+  setHelpme: (arg0: string) => void;
+  setDatePlaceholder: (arg0: string) => void;
+  setLoading: (arg0: string) => void;
 }
 
-const Layout = ({ title, children, footerMessage }: Props) => {
-  let header = (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            textDecoration: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h3>
-    )
-
+const Layout = ({ siteName, helpme, setSiteName, setLoading, setLocale, setHelpme, setDatePlaceholder, children }: Props) => {
 
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-      }}
-    >
-      <header>{header}</header>
+    <>
+      <Header siteName={siteName} setLoading={setLoading} setSiteName={setSiteName} setLocale={setLocale} setHelpme={setHelpme} setDatePlaceholder={setDatePlaceholder} />
       <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a> {footerMessage}
-      </footer>
-    </div>
+      <Footer helpme={helpme}></Footer>
+    </>
   )
 }
 
