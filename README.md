@@ -1,4 +1,5 @@
 # Your next line is: what is this project? :eyes:
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f55b006a-4e15-472f-8814-b43c21bcad82/deploy-status)](https://app.netlify.com/sites/jojo-cover/deploys)
 
 ![Nice](https://i.makeagif.com/media/9-22-2015/Gu-I08.gif)
 
