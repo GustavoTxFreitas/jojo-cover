@@ -6,6 +6,8 @@ import { registerLocale } from "react-datepicker";
 import i18next from "i18next";
 import { Link } from "gatsby";
 
+import style from "./header.module.css";
+
 interface Props {
   siteName: string;
   setSiteName: (arg0: string) => void;
@@ -48,7 +50,7 @@ const Header = ({
   }, [])
 
   return (
-    <header>
+    <header className={style.header}>
       <h3
         style={{
           fontFamily: `Montserrat, sans-serif`,

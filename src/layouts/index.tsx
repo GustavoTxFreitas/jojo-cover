@@ -17,11 +17,11 @@ interface Props {
 const Layout = ({ siteName, helpme, setSiteName, setLoading, setLocale, setHelpme, setDatePlaceholder, children }: Props) => {
 
   return (
-    <>
+    <div className={style.container}>
       <Header siteName={siteName} setLoading={setLoading} setSiteName={setSiteName} setLocale={setLocale} setHelpme={setHelpme} setDatePlaceholder={setDatePlaceholder} />
-      <main className={style.container}>{children}</main>
+      {children}
       <Footer helpme={helpme}></Footer>
-    </>
+    </div>
   )
 }
 

@@ -74,7 +74,7 @@ export default function Index(props: IndexPageProps) {
       setDatePlaceholder={setDatePlaceholder}
       setLocale={setLocale}
     >
-      <div className={style.content}>
+      <main className={style.content}>
         <DatePicker
           locale={locale}
           placeholderText={datePlaceholder}
@@ -108,7 +108,7 @@ export default function Index(props: IndexPageProps) {
         ) : (
           <p></p>
         )}
-      </div>
+      </main>
     </Layout>
   );
 }

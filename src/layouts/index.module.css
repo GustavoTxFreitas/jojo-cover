@@ -2,4 +2,27 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  min-height: 100vh;
+}
+
+.container header, .container main, .container footer{
+  width: 100vw;
+}
+
+.container header{
+  align-self: flex-start;
+}
+
+.container footer{
+  align-self: flex-end
+}
+
+.container main{
+  flex-grow: 2;
+}
+
+.container main{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
