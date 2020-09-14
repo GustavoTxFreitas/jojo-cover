@@ -1,5 +1,4 @@
 module.exports = {
-  pathPrefix: "/jojo-cover",
   siteMetadata: {
     title: `What's your Jojo manga cover?`,
   },
