@@ -1,6 +1,7 @@
 module.exports = {
+  pathPrefix: "/jojo-cover",
   siteMetadata: {
-    title: `Jojo manga cover`,
+    title: `What's your Jojo manga cover?`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

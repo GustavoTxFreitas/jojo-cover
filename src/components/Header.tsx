@@ -1,20 +1,20 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import i18n from "./i18next";
-import { useTranslation } from "react-i18next";
-import { ptBR, ja, enUS } from "date-fns/esm/locale";
-import { registerLocale } from "react-datepicker";
-import i18next from "i18next";
-import { Link } from "gatsby";
+import React, { useState, useEffect, ChangeEvent } from 'react'
+import i18n from './i18next'
+import { useTranslation } from 'react-i18next'
+import { ptBR, ja, enUS } from 'date-fns/esm/locale'
+import { registerLocale } from 'react-datepicker'
+import i18next from 'i18next'
+import { Link } from 'gatsby'
 
-import style from "./header.module.css";
+import style from './header.module.css'
 
 interface Props {
-  siteName: string;
-  setSiteName: (arg0: string) => void;
-  setLocale: (arg0: string) => void;
-  setHelpme: (arg0: string) => void;
-  setDatePlaceholder: (arg0: string) => void;
-  setLoading: (arg0: string) => void;
+  siteName: string
+  setSiteName: (arg0: string) => void
+  setLocale: (arg0: string) => void
+  setHelpme: (arg0: string) => void
+  setDatePlaceholder: (arg0: string) => void
+  setLoading: (arg0: string) => void
 }
 
 const Header = ({
@@ -25,28 +25,28 @@ const Header = ({
   setDatePlaceholder,
   setLoading,
 }: Props) => {
-  const { t } = useTranslation("translation", { i18n });
+  const { t } = useTranslation('translation', { i18n })
 
   function handleChangeLanguage(e: ChangeEvent<HTMLSelectElement>) {
-    i18next.changeLanguage(e.target.value);
+    i18next.changeLanguage(e.target.value)
 
-    setSiteName(t("siteName"));
-    setLocale(t("locale"));
-    setHelpme(t("helpme"));
-    setDatePlaceholder(t("datePlaceholder"));
-    setLoading(t("loading"));
+    setSiteName(t('siteName'))
+    setLocale(t('locale'))
+    setHelpme(t('helpme'))
+    setDatePlaceholder(t('datePlaceholder'))
+    setLoading(t('loading'))
   }
 
-  registerLocale("pt-BR", ptBR);
-  registerLocale("en-US", enUS);
-  registerLocale("ja", ja);
+  registerLocale('pt-BR', ptBR)
+  registerLocale('en-US', enUS)
+  registerLocale('ja', ja)
 
   useEffect(() => {
-    setSiteName(t("siteName"));
-    setLocale(t("locale"));
-    setHelpme(t("helpme"));
-    setDatePlaceholder(t("datePlaceholder"));
-    setLoading(t("loading"));
+    setSiteName(t('siteName'))
+    setLocale(t('locale'))
+    setHelpme(t('helpme'))
+    setDatePlaceholder(t('datePlaceholder'))
+    setLoading(t('loading'))
   }, [])
 
   return (
@@ -75,7 +75,7 @@ const Header = ({
         <option value="ja">ja</option>
       </select>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

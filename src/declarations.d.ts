@@ -1,2 +1,2 @@
 declare const graphql: (query: TemplateStringsArray) => void
-declare module '*.css';
+declare module '*.css'
