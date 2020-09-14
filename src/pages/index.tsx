@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 import DatePicker from "react-datepicker";
 import { Carousel } from "react-responsive-carousel";
 import Layout from "../layouts";
+import style from "./index.module.css";
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -29,7 +30,7 @@ interface IndexPageProps {
 export default function Index(props: IndexPageProps) {
   const { site, allJojoVolume } = props.data;
   const jojos = allJojoVolume.nodes;
-  const [birthday, setBirthday] = useState(new Date());
+  const [birthday, setBirthday] = useState<Date | null>(null);
   const [closestIndex, setClosestIndex] = useState(0);
 
   const [siteName, setSiteName] = useState("");
@@ -38,20 +39,29 @@ export default function Index(props: IndexPageProps) {
   const [locale, setLocale] = useState("en-US");
   const [helpme, setHelpme] = useState("");
 
-  useEffect(() => {
-    let closestDay = Number.MAX_SAFE_INTEGER;
-    for (let i = 0; i < jojos.length; i++) {
-      const diff = Math.abs(
-        birthday.getTime() - new Date(jojos[i].release_date).getTime()
-      );
 
-      if (diff < closestDay) {
-        closestDay = diff;
-        setClosestIndex(i);
-      } else if (diff > closestDay) {
-        break;
+  useEffect(() => {
+    function calculateClosestVolume(date: Date){
+      let closestDay = Number.MAX_SAFE_INTEGER;
+      for (let i = 0; i < jojos.length; i++) {
+        const diff = Math.abs(
+          date.getTime() - new Date(jojos[i].release_date).getTime()
+        );
+
+        if (diff < closestDay) {
+          closestDay = diff;
+          setClosestIndex(i);
+        } else if (diff > closestDay) {
+          break;
+        }
       }
     }
+
+    if(birthday)
+    {
+      calculateClosestVolume(birthday)
+    }
+    
   }, [birthday]);
 
   return (
@@ -64,33 +74,41 @@ export default function Index(props: IndexPageProps) {
       setDatePlaceholder={setDatePlaceholder}
       setLocale={setLocale}
     >
-      <DatePicker
-        locale={locale}
-        placeholderText={datePlaceholder}
-        selected={birthday}
-        dropdownMode="select"
-        dateFormat="P"
-        showMonthDropdown
-        showYearDropdown
-        onChange={(date: Date) => setBirthday(date)}
-      />
-      <Carousel
-        width="700px"
-        showThumbs={false}
-        showIndicators={false}
-        selectedItem={closestIndex}
-        centerMode
-        centerSlidePercentage={80}
-      >
-        {jojos.map((elem) => (
-          <div key={elem.id}>
-            <img src={elem.cover} />
-            <p className="legend">
-              {elem.volume} - {elem.english_title}
-            </p>
+      <div className={style.content}>
+        <DatePicker
+          locale={locale}
+          placeholderText={datePlaceholder}
+          selected={birthday}
+          dropdownMode="select"
+          dateFormat="P"
+          showMonthDropdown
+          showYearDropdown
+          onChange={(date: Date) => setBirthday(date)}
+        />
+        {birthday ? (
+          <div className={style.cover}>
+            <Carousel
+              showThumbs={false}
+              showIndicators={false}
+              selectedItem={closestIndex}
+              showStatus={false}
+              centerMode
+              centerSlidePercentage={80}
+            >
+              {jojos.map((elem) => (
+                <div key={elem.id}>
+                  <img src={elem.cover} />
+                  <p className="legend">
+                    {elem.volume} - {elem.english_title}
+                  </p>
+                </div>
+              ))}
+            </Carousel>
           </div>
-        ))}
-      </Carousel>
+        ) : (
+          <p></p>
+        )}
+      </div>
     </Layout>
   );
 }

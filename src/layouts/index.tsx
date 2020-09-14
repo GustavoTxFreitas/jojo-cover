@@ -1,6 +1,7 @@
 import React from "react"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
+import style from "./index.module.css";
 
 interface Props {
   siteName: string;
@@ -18,7 +19,7 @@ const Layout = ({ siteName, helpme, setSiteName, setLoading, setLocale, setHelpm
   return (
     <>
       <Header siteName={siteName} setLoading={setLoading} setSiteName={setSiteName} setLocale={setLocale} setHelpme={setHelpme} setDatePlaceholder={setDatePlaceholder} />
-      <main>{children}</main>
+      <main className={style.container}>{children}</main>
       <Footer helpme={helpme}></Footer>
     </>
   )

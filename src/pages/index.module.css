@@ -1,0 +1,12 @@
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  width: 80vw;
+}
+
+.cover {
+  max-width: 50vh;
+}

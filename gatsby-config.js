@@ -1,10 +1,10 @@
 module.exports = {
   siteMetadata: {
-    title: `Jojo manga volume`,
+    title: `Jojo manga cover`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    // Add typescript stack into webpack
-    `gatsby-plugin-typescript`
+    `gatsby-plugin-typescript`,
+    "gatsby-transformer-typescript-css-modules"
   ],
 }
