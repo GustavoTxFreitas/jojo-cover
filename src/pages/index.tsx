@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { graphql } from "gatsby";
-import DatePicker from "react-datepicker";
-import { Carousel } from 'react-responsive-carousel';
+import DatePicker, {registerLocale } from "react-datepicker"
+import { Carousel } from "react-responsive-carousel";
 import Layout from "../layouts";
+import i18n from "../components/i18next";
+import { useTranslation } from "react-i18next";
+import { ptBR, ja, enUS } from 'date-fns/esm/locale'
+import i18next from "i18next";
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -31,44 +35,64 @@ export default function Index(props: IndexPageProps) {
   const jojos = allJojoVolume.nodes;
   const [birthday, setBirthday] = useState(new Date());
   const [closestIndex, setClosestIndex] = useState(0);
+  const { t } = useTranslation("translation", { i18n });
+
+  registerLocale('pt-BR', ptBR)
+  registerLocale('en-US', enUS)
+  registerLocale('ja', ja)
 
   useEffect(() => {
-    let closestDay = Number.MAX_SAFE_INTEGER
-    for(let i = 0; i < jojos.length; i++)
-    {
-      console.log(jojos[i])
-      const diff = Math.abs(birthday.getTime() - new Date(jojos[i].release_date).getTime());
+    let closestDay = Number.MAX_SAFE_INTEGER;
+    for (let i = 0; i < jojos.length; i++) {
+      const diff = Math.abs(
+        birthday.getTime() - new Date(jojos[i].release_date).getTime()
+      );
 
-      if(diff < closestDay){
+      if (diff < closestDay) {
         closestDay = diff;
         setClosestIndex(i);
-      }
-      else if (diff > closestDay)
-      {
+      } else if (diff > closestDay) {
         break;
       }
     }
-  }, [birthday])
-  
+  }, [birthday]);
+
+  function handleChangeLanguage(e: ChangeEvent<HTMLSelectElement>)
+  {
+    i18next.changeLanguage(e.target.value);
+  }
+
   return (
-    <Layout title={site.siteMetadata.title}>
-      <h1>Hi people</h1>
+    <Layout title={t("siteName")} footerMessage={t("helpme")}>
+      <select onChange={handleChangeLanguage}>
+        <option value="en-US">en-US</option>
+        <option value="pt-BR">pt-BR</option>
+        <option value="ja">ja</option>
+      </select>
       <DatePicker
+        locale={t("locale")}
+        placeholderText={t("datePlaceholder")}
         selected={birthday}
-        dateFormat="dd/MM/yyyy"
         dropdownMode="select"
+        dateFormat="P"
         showMonthDropdown
         showYearDropdown
         onChange={(date: Date) => setBirthday(date)}
       />
-      <p>
-        Welcome to your new <strong>{site.siteMetadata.title}</strong> site.
-      </p>
-      <Carousel showThumbs={false} showIndicators={false} selectedItem={closestIndex} centerMode centerSlidePercentage={80}>
+      <Carousel
+        width="700px"
+        showThumbs={false}
+        showIndicators={false}
+        selectedItem={closestIndex}
+        centerMode
+        centerSlidePercentage={80}
+      >
         {jojos.map((elem) => (
           <div key={elem.id}>
             <img src={elem.cover} />
-            <p className="legend">{elem.volume} - {elem.english_title}</p>
+            <p className="legend">
+              {elem.volume} - {elem.english_title}
+            </p>
           </div>
         ))}
       </Carousel>

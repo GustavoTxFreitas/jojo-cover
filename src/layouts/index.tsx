@@ -3,10 +3,11 @@ import { Link } from "gatsby"
 
 interface Props {
   title: string
+  footerMessage: string,
   children?: any
 }
 
-const Layout = ({ title, children }: Props) => {
+const Layout = ({ title, children, footerMessage }: Props) => {
   let header = (
       <h3
         style={{
@@ -40,7 +41,7 @@ const Layout = ({ title, children }: Props) => {
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <a href="https://www.gatsbyjs.org">Gatsby</a> {footerMessage}
       </footer>
     </div>
   )
