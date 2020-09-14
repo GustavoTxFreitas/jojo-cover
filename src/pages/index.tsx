@@ -96,7 +96,8 @@ export default function Index(props: IndexPageProps) {
                 <div key={elem.id}>
                   <img src={elem.cover} />
                   <p className="legend">
-                    {elem.volume} - {locale === 'ja' ? elem.japanese_title : elem.english_title}
+                    {elem.volume} - {locale === 'ja' ? elem.japanese_title : elem.english_title} <br />
+                    {new Date(elem.release_date).toLocaleDateString(locale)}
                   </p>
                 </div>
               ))}
