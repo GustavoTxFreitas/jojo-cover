@@ -1,6 +1,19 @@
-.header{
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    background-color: crimson;
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+  background-color: #531c279c;
+}
+
+.language_container{
+    min-width: 11rem;
+    max-width: 50vw;
+}
+
+.language{
+    padding: 1em;
+}
+
+.icon {
+    width: 50px;
 }

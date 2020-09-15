@@ -61,6 +61,8 @@ export default function Index(props: IndexPageProps) {
     } 
   }, [birthday]);
 
+  const font = locale === 'ja' ? `'Noto Sans JP', sans-serif` : `'Roboto', sans-serif`;
+
   return (
     <Layout
       siteName={siteName}
@@ -72,7 +74,16 @@ export default function Index(props: IndexPageProps) {
       setLocale={setLocale}
     >
       <main className={style.content}>
-        {birthday === null ? <img src="/JOJOsvg.svg" className={style.bigLogo} /> : ""}
+        {birthday === null ? 
+          <>
+          <img src="/JOJOsvg.svg" className={style.bigLogo} /> 
+            {
+              locale !== 'en-US' ? 
+              <p style={{fontFamily: font}}>({siteName})</p>
+              : ""
+            }
+          </>
+          : <div></div>}
         <div className={style.datepicker}>
           <DatePicker
             locale={locale}

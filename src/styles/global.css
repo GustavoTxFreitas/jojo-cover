@@ -2,3 +2,7 @@
 @import url('../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css');
 @import url('./reset.css');
 @import url('./react-datepicker-theme.css');
+@import url('./react-select-theme.css');
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
