@@ -36,7 +36,7 @@ const Layout = ({
         setDatePlaceholder={setDatePlaceholder}
       />
       {children}
-      <Footer helpme={helpme}></Footer>
+      <Footer />
     </div>
   )
 }
