@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { graphql } from 'gatsby'
-import DatePicker from 'react-datepicker'
-import { Carousel } from 'react-responsive-carousel'
-import Layout from '../layouts'
-import style from './index.module.css'
+import React, { useState, useEffect } from "react";
+import { graphql } from "gatsby";
+import DatePicker from "react-datepicker";
+import { Carousel } from "react-responsive-carousel";
+import Layout from "../layouts";
+import style from "./index.module.css";
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -11,55 +11,57 @@ interface IndexPageProps {
   data: {
     site: {
       siteMetadata: {
-        title: string
-      }
-    }
+        title: string;
+      };
+    };
     allJojoVolume: {
       nodes: {
-        id: number
-        english_title: string
-        japanese_title: string
-        volume: string
-        cover: string
-        release_date: string
-      }[]
-    }
-  }
+        id: number;
+        english_title: string;
+        japanese_title: string;
+        volume: string;
+        cover: string;
+        release_date: string;
+      }[];
+    };
+  };
 }
 
 export default function Index(props: IndexPageProps) {
-  const { site, allJojoVolume } = props.data
-  const jojos = allJojoVolume.nodes
-  const [birthday, setBirthday] = useState<Date | null>(null)
-  const [closestIndex, setClosestIndex] = useState(0)
+  const { site, allJojoVolume } = props.data;
+  const jojos = allJojoVolume.nodes;
+  const [birthday, setBirthday] = useState<Date | null>(null);
+  const [closestIndex, setClosestIndex] = useState(0);
 
-  const [siteName, setSiteName] = useState('')
-  const [datePlaceholder, setDatePlaceholder] = useState('')
-  const [loading, setLoading] = useState('')
-  const [locale, setLocale] = useState('en-US')
-  const [helpme, setHelpme] = useState('')
+  const [siteName, setSiteName] = useState("");
+  const [datePlaceholder, setDatePlaceholder] = useState("");
+  const [loading, setLoading] = useState("");
+  const [locale, setLocale] = useState("en-US");
+  const [helpme, setHelpme] = useState("");
 
   useEffect(() => {
     function calculateClosestVolume(date: Date) {
-      let closestDay = Number.MAX_SAFE_INTEGER
+      let closestDay = Number.MAX_SAFE_INTEGER;
       for (let i = 0; i < jojos.length; i++) {
         const diff = Math.abs(
           date.getTime() - new Date(jojos[i].release_date).getTime()
-        )
+        );
 
         if (diff < closestDay) {
-          closestDay = diff
-          setClosestIndex(i)
+          closestDay = diff;
+          setClosestIndex(i);
         } else if (diff > closestDay) {
-          break
+          break;
         }
       }
     }
 
     if (birthday) {
-      calculateClosestVolume(birthday)
-    }
-  }, [birthday])
+      calculateClosestVolume(birthday);
+    } 
+  }, [birthday]);
+
+  const font = locale === 'ja' ? `'Noto Sans JP', sans-serif` : `'Roboto', sans-serif`;
 
   return (
     <Layout
@@ -72,19 +74,33 @@ export default function Index(props: IndexPageProps) {
       setLocale={setLocale}
     >
       <main className={style.content}>
-        <DatePicker
-          locale={locale}
-          placeholderText={datePlaceholder}
-          selected={birthday}
-          dropdownMode="select"
-          dateFormat="P"
-          showMonthDropdown
-          showYearDropdown
-          onChange={(date: Date) => setBirthday(date)}
-        />
+        {birthday === null ? 
+          <>
+          <img src="/JOJOsvg.svg" className={style.bigLogo} /> 
+            {
+              locale !== 'en-US' ? 
+              <p style={{fontFamily: font}}>({siteName})</p>
+              : ""
+            }
+          </>
+          : <div></div>}
+        <div className={style.datepicker}>
+          <DatePicker
+            locale={locale}
+            placeholderText={datePlaceholder}
+            selected={birthday}
+            dropdownMode="select"
+            dateFormat="P"
+            showMonthDropdown
+            showYearDropdown
+            onChange={(date: Date) => setBirthday(date)}
+            popperPlacement="top-end"
+          />
+        </div>
         {birthday ? (
-          <div className={style.cover}>
+          <div className={[style.cover, style.fadein].join(' ')}>
             <Carousel
+              className={style.carousel}
               showThumbs={false}
               showIndicators={false}
               selectedItem={closestIndex}
@@ -96,7 +112,9 @@ export default function Index(props: IndexPageProps) {
                 <div key={elem.id}>
                   <img src={elem.cover} />
                   <p className="legend">
-                    {elem.volume} - {locale === 'ja' ? elem.japanese_title : elem.english_title} <br />
+                    {elem.volume} -{" "}
+                    {locale === "ja" ? elem.japanese_title : elem.english_title}{" "}
+                    <br />
                     {new Date(elem.release_date).toLocaleDateString(locale)}
                   </p>
                 </div>
@@ -108,7 +126,7 @@ export default function Index(props: IndexPageProps) {
         )}
       </main>
     </Layout>
-  )
+  );
 }
 
 export const pageQuery = graphql`
@@ -129,4 +147,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

@@ -1,7 +1,21 @@
 .footer {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 5px;
-  background-color: darkgray;
+  background-color: #531c279c;
+  color: #FFF;
+  font-family: 'Roboto', sans-serif;
+}
+
+.footer a:hover{
+  color: #e6c3cd;
+}
+
+.footer a{
+  color: #916f79;
+}
+
+.icon {
+  width: 16px;
 }

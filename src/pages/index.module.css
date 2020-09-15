@@ -4,9 +4,64 @@
   flex-direction: column;
   align-content: center;
   align-items: center;
-  width: 80vw;
+}
+
+.content p{
+  color: white;
+  padding-bottom: 1em;
 }
 
 .cover {
   max-width: 50vh;
+}
+
+.bigLogo {
+  width: 100%;
+  max-height: 60vh;
+  flex: 2;
+  padding: 0rem 6rem 2rem 6rem;
+}
+
+.carousel {
+  flex: 2;
+}
+
+.datepicker {
+  width: 50vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 30px;
+}
+
+.datepicker input[type="text"] {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #848484;
+  outline: 0;
+  text-align: center;
+  line-height: 30px;
+  padding: 0 30px;
+  width: 18rem;
+}
+
+.fadein {
+  animation: fadeIn ease 2s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .bigLogo {
+    padding: 0 2rem 0 2rem;
+  }
+  
 }

@@ -24,6 +24,7 @@ const Layout = ({
   setDatePlaceholder,
   children,
 }: Props) => {
+  
   return (
     <div className={style.container}>
       <Header
@@ -35,7 +36,7 @@ const Layout = ({
         setDatePlaceholder={setDatePlaceholder}
       />
       {children}
-      <Footer helpme={helpme}></Footer>
+      <Footer />
     </div>
   )
 }

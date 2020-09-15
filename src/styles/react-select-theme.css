@@ -1,0 +1,21 @@
+.language__control{
+    background-color: #020102!important;
+    border-color: hsl(0, 42.1%, 22.4%)!important;
+}
+
+.language__single-value, .language__indicatorContainer{
+    color: #916f79!important;
+}
+
+.language__indicatorSeparator{
+    background-color: #916f79!important;
+}
+
+.language__option--is-selected{
+    background-color: crimson!important;
+}
+
+.language__option--is-focused{
+    background-color:  #e6c3cd!important;
+    color: black!important;
+}
