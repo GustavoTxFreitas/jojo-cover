@@ -1,5 +1,6 @@
 # Your next line is: what is this project? :eyes:
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f55b006a-4e15-472f-8814-b43c21bcad82/deploy-status)](https://app.netlify.com/sites/jojo-cover/deploys)
+<a href='https://ko-fi.com/U7U6276CL' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> [![Netlify Status](https://api.netlify.com/api/v1/badges/f55b006a-4e15-472f-8814-b43c21bcad82/deploy-status)](https://app.netlify.com/sites/jojo-cover/deploys)
+
 
 ![Nice](https://i.makeagif.com/media/9-22-2015/Gu-I08.gif)
 
