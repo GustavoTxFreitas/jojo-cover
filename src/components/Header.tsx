@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { ptBR, ja, enUS } from "date-fns/esm/locale";
 import { registerLocale } from "react-datepicker";
 import i18next from "i18next";
-import Select, { OptionsType  } from "react-select";
+import Select from "react-select";
+import { Helmet } from "react-helmet";
 
 import style from "./header.module.css";
 
@@ -59,7 +60,7 @@ const Header = ({
     {
       value: "en-US",
       label: (
-        <div style={{fontFamily: `'Roboto', sans-serif`} }>
+        <div style={{ fontFamily: `'Roboto', sans-serif` }}>
           <img className={style.icon} src="./usa.png" /> USA
         </div>
       ),
@@ -67,15 +68,15 @@ const Header = ({
     {
       value: "pt-BR",
       label: (
-        <div style={{fontFamily: `'Roboto', sans-serif`} }>
-          <img className={style.icon}  src="./brazil.png" /> PT-BR
+        <div style={{ fontFamily: `'Roboto', sans-serif` }}>
+          <img className={style.icon} src="./brazil.png" /> PT-BR
         </div>
       ),
     },
     {
       value: "ja",
       label: (
-        <div style={ {fontFamily: `'Noto Sans JP', sans-serif`} }>
+        <div style={{ fontFamily: `'Noto Sans JP', sans-serif` }}>
           <img className={style.icon} src="./japan.png" /> JP
         </div>
       ),
@@ -84,10 +85,14 @@ const Header = ({
 
   return (
     <header className={style.header}>
-
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{siteName}</title>
+        <link rel="canonical" href="https://jojo-cover.netlify.app/" />
+      </Helmet>
       <Select
         className={style.language_container}
-        classNamePrefix={style.language}
+        classNamePrefix="language"
         defaultValue={options[0]}
         options={options}
         onChange={(e) => {

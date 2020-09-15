@@ -1,21 +1,21 @@
-.header-module--language--2Uqw7__control{
-    background-color: #020102;
-    border-color: hsl(0, 42.1%, 22.4%);
+.language__control{
+    background-color: #020102!important;
+    border-color: hsl(0, 42.1%, 22.4%)!important;
 }
 
-.header-module--language--2Uqw7__single-value, .header-module--language--2Uqw7__indicatorContainer{
-    color: #916f79;
+.language__single-value, .language__indicatorContainer{
+    color: #916f79!important;
 }
 
-.header-module--language--2Uqw7__indicatorSeparator{
-    background-color: #916f79;
+.language__indicatorSeparator{
+    background-color: #916f79!important;
 }
 
-.header-module--language--2Uqw7__option--is-selected{
-    background-color: crimson;
+.language__option--is-selected{
+    background-color: crimson!important;
 }
 
-.header-module--language--2Uqw7__option--is-focused{
-    background-color:  #e6c3cd;
-    color: black;
+.language__option--is-focused{
+    background-color:  #e6c3cd!important;
+    color: black!important;
 }
