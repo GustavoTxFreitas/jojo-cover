@@ -1,7 +1,7 @@
 .container{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  flex-flow: column;
   height: 100vh;
   width: 100vw;
   background-image: linear-gradient(180deg, rgba(27, 10, 27, 0.75) 0%, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 75%, rgba(27, 10, 27, 0.75) 100%), url('/bg.png');
@@ -12,15 +12,15 @@
 }
 
 .container header{
-  align-self: flex-start;
+  height: 5vh;
 }
 
 .container footer{
-  align-self: flex-end
+  max-height: 10vh;
 }
 
 .container main{
-  flex-grow: 2;
+  flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

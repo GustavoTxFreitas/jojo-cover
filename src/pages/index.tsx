@@ -84,7 +84,6 @@ export default function Index(props: IndexPageProps) {
             showYearDropdown
             onChange={(date: Date) => setBirthday(date)}
             popperPlacement="top-end"
-            popperClassName={style.teste}
           />
         </div>
         {birthday ? (
