@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { Carousel } from "react-responsive-carousel";
 import Layout from "../layouts";
 import style from "./index.module.css";
+import Img from "gatsby-image"
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -20,7 +21,7 @@ interface IndexPageProps {
         english_title: string;
         japanese_title: string;
         volume: string;
-        cover: string;
+        cover: any;
         release_date: string;
       }[];
     };
@@ -110,8 +111,10 @@ export default function Index(props: IndexPageProps) {
             >
               {jojos.map((elem) => (
                 <div key={elem.id}>
-                  <img src={elem.cover} />
-                  <p className="legend">
+                  <Img
+                    fixed={elem.cover.childImageSharp.fixed}
+                  />
+                  <p className="legend" style={{fontFamily: font}}>
                     {elem.volume} -{" "}
                     {locale === "ja" ? elem.japanese_title : elem.english_title}{" "}
                     <br />
@@ -143,7 +146,13 @@ export const pageQuery = graphql`
         english_title
         japanese_title
         release_date
-        cover
+        cover {
+          childImageSharp {
+            fixed(height: 600) {
+              ...GatsbyImageSharpFixed
+            }
+          }
+        }
       }
     }
   }

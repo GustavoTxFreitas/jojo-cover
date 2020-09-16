@@ -26,6 +26,14 @@
   flex: 2;
 }
 
+.carousel p{
+  opacity: 0.5!important;
+}
+
+.carousel p:hover{
+  opacity: 1!important;
+}
+
 .datepicker {
   width: 50vw;
   display: flex;
