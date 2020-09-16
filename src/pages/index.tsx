@@ -110,9 +110,10 @@ export default function Index(props: IndexPageProps) {
               centerSlidePercentage={80}
             >
               {jojos.map((elem) => (
-                <div key={elem.id}>
+                <div key={elem.id} style={{maxHeight: '60vh'}}>
                   <Img
                     fixed={elem.cover.childImageSharp.fixed}
+                    style={{maxHeight: '60vh'}}
                   />
                   <p className="legend" style={{fontFamily: font}}>
                     {elem.volume} -{" "}

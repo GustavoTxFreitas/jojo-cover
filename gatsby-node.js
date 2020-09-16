@@ -119,7 +119,7 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   if (node.internal.type === 'JojoVolume') {
-    console.log(node)
+    //console.log(node)
     let fileNode = await createRemoteFileNode({
       url: node.cover, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
