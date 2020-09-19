@@ -11,8 +11,8 @@ const Footer = () => {
         </div>
         <div className={style.message}>
           Data from{" "}
-          <a href="https://jojo.fandom.com/wiki/Main_Page">
-            Jojo's bizarre -Wiki- Adventure
+          <a href="https://jojowiki.com/JoJo_Wiki">
+            Jojo's Bizarre Encyclopedia
           </a>{" "}
         </div>
       </div>

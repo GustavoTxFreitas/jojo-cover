@@ -1,76 +1,83 @@
+require("dotenv").config({path: `.env.${process.env.NODE_ENV}`})
 const crypto = require("crypto");
 const axios = require("axios");
 const cheerio = require("cheerio");
-const { createRemoteFileNode } = require("gatsby-source-filesystem")
+const { createRemoteFileNode } = require("gatsby-source-filesystem");
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
   createTypes(`
     type JojoVolume implements Node {
-      metadata: Metadata
-      cover: File @link(from: "cover___NODE")
-    }
-    type Metadata {
       volume: String!
       english_title: String
       japanese_title: String
       release_date: Date
-      cover: String
+      cover: File @link(from: "cover___NODE")
     }
-  `)
-}
+  `);
+};
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions;
   const pages = [
-    "https://jojo.fandom.com/wiki/List_of_JoJo%27s_Bizarre_Adventure_chapters",
-    "https://jojo.fandom.com/wiki/List_of_JoJo%27s_Bizarre_Adventure_chapters/Volume_51_to_100",
-    "https://jojo.fandom.com/wiki/List_of_JoJo%27s_Bizarre_Adventure_chapters/Volume_101_to_Current",
+    "https://jojowiki.com/List_of_JoJo%27s_Bizarre_Adventure_chapters",
+    "https://jojowiki.com/List_of_JoJo%27s_Bizarre_Adventure_chapters/Volume_51_to_100",
+    "https://jojowiki.com/List_of_JoJo%27s_Bizarre_Adventure_chapters/Volume_101_to_Current",
   ];
   let volumes = [];
 
-  for(page of pages)
-  {
-  const res = await axios.get(page);
-  const $ = cheerio.load(res.data);
+  for (page of pages) {
+    const res = await axios.get(page);
+    const $ = cheerio.load(res.data);
 
-  let tables = $("table")
-    .map((i, elem) => {
-      const li = $(elem)
-        .find(
-          'tbody tr td[style="border: none; vertical-align: center; font-size: 90%;"] ul li'
-        )
-        .text();
-      const title = $(elem)
-        .find('tbody tr td[style="text-align: center; font-size:100%;"]')
-        .toArray();
-      const release_date_match = /<img .*>(.*)\[/g.exec(li);
-      const english_match = /\s*(.*):\s*(.*)/g.exec($(title[0]).find("b").text());
-      const japanese_match = /\((.*)\)$/g.exec($(title[1]).find("b").first().text());
-    
-      return {
-        volume: english_match ? english_match[1] : null,
-        english_title: english_match ? english_match[2] : null,
-        japanese_title: japanese_match ? japanese_match[1] : null,
-        release_date: release_date_match ? new Date(release_date_match[1]) : null,
-        cover: $(elem).find("tbody tr th a").attr("href"),
-      };
-    })
-    .get();
+    let tables = $("table")
+      .map((i, elem) => {
+        const li = $(elem)
+          .find(
+            'tbody tr td[style="border: none; vertical-align: center; font-size: 90%;"] ul li'
+          )
+          .text();
+        const title = $(elem).find("tbody tr td").toArray();
 
-  for (let i = 1; i < tables.length; i++) {
-    if (tables[i].release_date !== null) {
-      const cover_match = /(.*)\?/g.exec(tables[i].cover)
-      tables[i - 1].release_date = tables[i].release_date;
-      tables[i - 1].cover = cover_match[1] + "/scale-to-width-down/600";
+        //everything until the first bracket
+        const release_date_match = /([^\[]*)/g.exec(li);
+        //get anything before : (volume information), and everything after (english title/translation)
+        const english_match = /\s*(.*):\s*(.*)/g.exec(
+          $(title[0]).find("b").text()
+        );
+        //get everything from parenthesis (is japanese)
+        const japanese_match = /\((.*)\)$/g.exec(
+          $(title[1]).find("b").first().text()
+        );
+
+        return {
+          volume: english_match ? english_match[1] : null,
+          english_title: english_match ? english_match[2] : null,
+          japanese_title: japanese_match ? japanese_match[1] : null,
+          release_date: release_date_match
+            ? new Date(release_date_match[1])
+            : null,
+          cover: $(elem).find("tbody tr th a img").attr("src"),
+        };
+      })
+      .get();
+
+    for (let i = 1; i < tables.length; i++) {
+      if (tables[i].release_date !== null && !isNaN(tables[i].release_date.getTime())) {
+        console.log(tables[i])
+        //remove thumbnail property from url
+        const cover_match = /(.*)\/thumb(.*[\.jpg|\.png])\//g.exec(
+          tables[i].cover
+        );
+
+        tables[i - 1].release_date = tables[i].release_date;
+        tables[i - 1].cover = cover_match[1] + cover_match[2];
+      }
     }
-  }
 
-  tables = tables.filter(
-    (table) => table.english_title !== null
-  );
-  
-  volumes = volumes.concat(tables);
+    tables = tables.filter((table) => table.english_title !== null);
+
+    volumes = volumes.concat(tables);
   }
 
   // map into these results and create nodes
@@ -82,7 +89,7 @@ exports.sourceNodes = async ({ actions }) => {
       id: `${i}`,
       parent: `__SOURCE__`,
       internal: {
-        type: `JojoVolume`, // name of the graphQL query 
+        type: `JojoVolume`, // name of the graphQL query
         // contentDigest will be added just after
         // but it is required
       },
@@ -94,7 +101,7 @@ exports.sourceNodes = async ({ actions }) => {
       japanese_title: elem.japanese_title,
       release_date: elem.release_date,
       cover: elem.cover,
-    }
+    };
 
     // Get content digest of node. (Required field)
     const contentDigest = crypto
@@ -118,19 +125,27 @@ exports.onCreateNode = async ({
   cache,
   createNodeId,
 }) => {
-  if (node.internal.type === 'JojoVolume') {
-    //console.log(node)
-    let fileNode = await createRemoteFileNode({
-      url: node.cover, // string that points to the URL of the image
-      parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
-      createNode, // helper function in gatsby-node to generate the node
-      createNodeId, // helper function in gatsby-node to generate the node id
-      cache, // Gatsby's cache
-      store, // Gatsby's redux store
-    })
-    // if the file was created, attach the new node to the parent node
-    if (fileNode) {
-      node.cover___NODE = fileNode.id
+  let fileNode;
+  if (node.internal.type === "JojoVolume") {
+    console.log(node);
+
+    try {
+      fileNode = await createRemoteFileNode({
+        url: node.cover, // string that points to the URL of the image
+        parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
+        createNode, // helper function in gatsby-node to generate the node
+        createNodeId, // helper function in gatsby-node to generate the node id
+        cache, // Gatsby's cache
+        store, // Gatsby's redux store
+        httpHeaders: {
+          "Connection": "keep-alive",
+          "Content-Type": "image/jpeg",
+          "user-agent": "Jojo cover bot (https://github.com/sinayra/jojo-cover)",
+        },
+      });
+      node.cover___NODE = fileNode.id;
+    } catch (error) {
+      console.error("error creating node: ", error);
     }
   }
-}
+};
