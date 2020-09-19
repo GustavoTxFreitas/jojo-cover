@@ -7,11 +7,11 @@ const { createRemoteFileNode } = require("gatsby-source-filesystem");
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
   createTypes(`
-    type JojoVolume implements Node {
+    type JojoVolume implements Node @infer {
       volume: String!
       english_title: String
       japanese_title: String
-      release_date: Date
+      release_date: Date @dateformat
       cover: File @link(from: "cover___NODE")
     }
   `);
@@ -64,7 +64,7 @@ exports.sourceNodes = async ({ actions }) => {
 
     for (let i = 1; i < tables.length; i++) {
       if (tables[i].release_date !== null && !isNaN(tables[i].release_date.getTime())) {
-        console.log(tables[i])
+        //console.log(tables[i])
         //remove thumbnail property from url
         const cover_match = /(.*)\/thumb(.*[\.jpg|\.png])\//g.exec(
           tables[i].cover
@@ -127,7 +127,7 @@ exports.onCreateNode = async ({
 }) => {
   let fileNode;
   if (node.internal.type === "JojoVolume") {
-    console.log(node);
+    //console.log(node);
 
     try {
       fileNode = await createRemoteFileNode({
