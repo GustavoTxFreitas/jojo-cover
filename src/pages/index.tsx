@@ -47,8 +47,6 @@ export default function Index(props: IndexPageProps) {
         const diff = Math.abs(
           date.getTime() - new Date(jojos[i].release_date).getTime()
         );
-          console.log(jojos[i])
-        console.log(diff);
 
         if (diff < closestDay) {
           closestDay = diff;
