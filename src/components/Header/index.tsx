@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import i18n from "./i18next";
+import i18n from "../i18next";
 import { useTranslation } from "react-i18next";
 import { ptBR, ja, enUS } from "date-fns/esm/locale";
 import { registerLocale } from "react-datepicker";
@@ -7,7 +7,7 @@ import i18next from "i18next";
 import Select from "react-select";
 import { Helmet } from "react-helmet";
 
-import style from "./header.module.css";
+import style from "./index.module.css";
 
 interface Props {
   siteName: string;
